@@ -1,0 +1,104 @@
+import cv2
+from matplotlib import pyplot as plt
+import numpy as np
+import sklearn 
+
+img = cv2.imread("lena.png")
+gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+#h, w, c = img.shape
+#blue, green, red = cv2.split(img)
+
+
+
+# blueBGR = cv2.merge((blue,zeros,zeros))
+# greenBGR = cv2.merge((zeros,green,zeros))
+# redBGR = cv2.merge((zeros,zeros,red))
+    
+img2= np.zeros([512, 512, 3], np.uint8)
+img3= np.zeros([512, 512, 3], np.uint8)
+img2G= np.zeros([512, 512], np.uint8)
+img3G= np.zeros([512, 512], np.uint8)
+img4= np.zeros([512, 512, 3], np.uint8)
+img5= np.zeros([512, 512, 1], np.uint8)
+blueBGR = np.zeros((512,512,3), np.uint8)
+greenBGR = np.zeros((512,512,3), np.uint8)
+redBGR = np.zeros((512,512,3), np.uint8)
+img6 = np.zeros((512,512,3), np.uint8)
+
+
+for i in range(512):
+    for j in range(512):
+            
+            #vertical flip
+            img2[i,:]=img[512-i-1,:]
+            img2G[i,:]=gray[512-i-1,:]
+            
+            #Horizontal flip
+            img3[:,j]=img[:,512-j-1]
+            img3G[:,j]=gray[:,512-j-1]
+            
+                      
+for i in range(511):
+    for j in range(511):
+            img4[i,j] = 255 - img[i,j]
+
+ 
+            #Grey Negated
+            img5 = cv2.cvtColor(img4,cv2.COLOR_BGR2GRAY)
+           
+          
+            
+
+for i in range(511):
+    for j in range(511):
+        blueBGR[i,j, 0]=img[i,j, 0]
+        greenBGR[i,j,1] = img[i,j,1]
+        redBGR[i,j,2] = img[i,j,2]
+            
+
+            
+#Merge All 
+#img6 = cv2.merge((blue,green,red))            
+img6=blueBGR+greenBGR+redBGR
+
+
+#Run only one (plt.title/plt.imshow) At a Time
+#RunTimes very from 1-2mins
+
+
+
+#Flipping Image
+
+# plt.title("Lena color Horizontal flip")
+# plt.imshow(cv2.cvtColor(img3,cv2.COLOR_BGR2RGB))
+
+# plt.title("Lena color Vertical flip")
+# plt.imshow(cv2.cvtColor(img2,cv2.COLOR_BGR2RGB))
+
+# plt.title("Lena Grey Horizontal flip")
+# plt.imshow(img3G, cmap = 'gray')
+
+# plt.title("Lena Grey Vertical flip")
+# plt.imshow(img2G, cmap = 'gray')
+
+#Negating Image
+
+# plt.title("Lena color negated")
+# plt.imshow(cv2.cvtColor(img4,cv2.COLOR_BGR2RGB))
+
+#Grey Negated Image
+
+# plt.title("Lena gray negated")
+# plt.imshow(img5, cmap = 'gray')
+
+
+
+# #Seperating Color Channels
+# plt.title("Lena Blue Image")
+# plt.imshow(cv2.cvtColor(blueBGR,cv2.COLOR_BGR2RGB))
+# plt.title("Lena Green Image")
+# plt.imshow(cv2.cvtColor(greenBGR,cv2.COLOR_BGR2RGB)) 
+# plt.title("Lena Red Image")
+# plt.imshow(cv2.cvtColor(redBGR,cv2.COLOR_BGR2RGB))
+# plt.title("Merged Image")
+# plt.imshow(cv2.cvtColor(img6,cv2.COLOR_BGR2RGB))
