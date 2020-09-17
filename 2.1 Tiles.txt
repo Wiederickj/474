@@ -1,0 +1,22 @@
+WindowName = "window"
+size = 100
+
+def tile_img(img,step_size):
+    tile_img = np.zeros((768, 1024), np.uint8)
+    img_arr = []
+    m = 0
+    while m < tile_img.shape[1]:
+        n = 0
+        while n < tile_img.shape[0]:
+            tile_img = cv2.rectangle(tile_img,(m,n),(m+step_size,n+step_size),(100,0,0),1)
+            threshold_img = img[m:n, m + step_size: n + step_size]
+            
+            img_arr.append(threshold_img)
+            n += step_size
+        m += step_size
+         
+    return [tile_img,img_arr]
+
+
+plt.imshow((tile_img(gray_houses,size))[0], cmap = "gray")
+
